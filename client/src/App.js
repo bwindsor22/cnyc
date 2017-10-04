@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import CaseStatus from './components/case-status.js'
+import DefaultHelp from './components/default-help.js'
 
 import './App.css';
 
@@ -52,7 +53,7 @@ https://daveceddia.com/create-react-app-express-production/
           <ol>
             {currentMessage}
           </ol>
-
+          <DefaultHelp />
         </div>
       </div>
     );
