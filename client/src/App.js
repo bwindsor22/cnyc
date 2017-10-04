@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import CaseStatus from './components/case-status.js'
+
 import './App.css';
 
 class App extends Component {
   // Initialize state
-  state = { passwords: [] }
+  state = {
+    passwords: [],
+    messages: []
+  }
 
   // Fetch passwords after first mount
   componentDidMount() {
     this.getPasswords();
+
+    firebase.database().ref('messages/').on('value', (snapshot) => {
+      const currentMessages = snapshot.val()
+      console.log(currentMessages)
+      if (currentMessages != null) {
+        this.setState({
+          messages: currentMessages
+        })
+      }
+    })
   }
 
   getPasswords = () => {
@@ -19,43 +35,25 @@ class App extends Component {
 
   render() {
     const { passwords } = this.state;
-
+    const currentMessage = this.state.messages.map((message,i) => {
+          return (
+              <li key={message.id}>
+              First: {message.first} Last: {message.last} Referral No.: {message.referral} Zip Code: {message.zip}
+              </li>
+          )
+    })
+{/*
+https://daveceddia.com/create-react-app-express-production/
+  */}
     return (
       <div className="App">
-        {/* Render the passwords if we have them */}
-        {passwords.length ? (
-          <div>
-            <h1>5 Passwords.</h1>
-            <ul className="passwords">
-              {/*
-                Generally it's bad to use "index" as a key.
-                It's ok for this example because there will always
-                be the same number of passwords, and they never
-                change positions in the array.
-              */}
-              {passwords.map((password, index) =>
-                <li key={index}>
-                  {password}
-                </li>
-              )}
-            </ul>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Get More
-            </button>
-          </div>
-        ) : (
-          // Render a helpful message otherwise
-          <div>
-            <h1>No passwords :(</h1>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Try Again?
-            </button>
-          </div>
-        )}
+        <CaseStatus />
+        <div>
+          <ol>
+            {currentMessage}
+          </ol>
+
+        </div>
       </div>
     );
   }
