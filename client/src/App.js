@@ -38,7 +38,7 @@ class App extends Component {
         <Router onUpdate={() => window.scrollTo(0, 0)}>
           <Switch>
             <Route exact path="/" component={AllUsers} />
-            <Route path="/sampleuser" component={SingleUser} />
+            <Route path="/viewUser" component={SingleUser} />
           </Switch>
         </Router>
       </div>

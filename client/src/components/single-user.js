@@ -13,17 +13,14 @@ class SingleUser extends Component {
     firebase.database().ref('messages/' + String(id)).on('value', (snapshot) => {
       const user = snapshot.val()
       const status = user.status
-      console.log("found user:")
       console.log(user)
-      console.log(user.status)
-      console.log(user.status.helpEmail)
+
       if (user != null) {
         this.setState({
           user: user,
           status: status
         })
       }
-      console.log(this.state.user)
     })
   }
 
@@ -31,9 +28,7 @@ class SingleUser extends Component {
   render() {
     const user = this.state.user;
     const status = this.state.status;
-    console.log("status")
     return (
-
         <div>
           <h1> {user.first} {user.last} </h1>
           <p>Referral No.: {user.referral} Zip Code: {user.zip} </p>
