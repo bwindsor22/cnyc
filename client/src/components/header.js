@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './case-status-styles'
+import styles from './header-styles'
 
-class CaseStatus extends React.Component{
+class Header extends React.Component{
     render() {
         return (
           <div>
@@ -20,4 +20,4 @@ class CaseStatus extends React.Component{
 };
 
 
-export default CaseStatus;
+export default Header;

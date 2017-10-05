@@ -4,7 +4,7 @@ class DefaultHelp extends React.Component{
     render() {
         return (
           <div>
-          <p><span class="label">Status</span>
+          <p><span >Status</span>
             <br />Referred to NYC Mortgage Helpline
             <br /><a href="www.nycmortgagehelpline.com">www.nycmortgagehelpline.com</a>
             <br /><a href="help@nycmortgagehelpline.com">help@nycmortgagehelpline.com</a>

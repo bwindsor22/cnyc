@@ -1,60 +1,46 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import CaseStatus from './components/case-status.js'
+import AllUsers from './components/all-users.js'
+import Header from './components/header.js'
 import DefaultHelp from './components/default-help.js'
+import SingleUser from './components/single-user.js'
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch
+ } from 'react-router-dom';
 
 import './App.css';
 
 class App extends Component {
   // Initialize state
   state = {
-    passwords: [],
-    messages: []
+    users: []
   }
 
-  // Fetch passwords after first mount
   componentDidMount() {
-    this.getPasswords();
-
-    firebase.database().ref('messages/').on('value', (snapshot) => {
-      const currentMessages = snapshot.val()
-      console.log(currentMessages)
-      if (currentMessages != null) {
-        this.setState({
-          messages: currentMessages
-        })
-      }
-    })
   }
 
   getPasswords = () => {
-    // Get the passwords and store them in state
+    // TODO: REPLACE WITH CALL TO TWILIO
     fetch('/api/passwords')
       .then(res => res.json())
       .then(passwords => this.setState({ passwords }));
   }
 
   render() {
-    const { passwords } = this.state;
-    const currentMessage = this.state.messages.map((message,i) => {
-          return (
-              <li key={message.id}>
-              First: {message.first} Last: {message.last} Referral No.: {message.referral} Zip Code: {message.zip}
-              </li>
-          )
-    })
-{/*
-https://daveceddia.com/create-react-app-express-production/
-  */}
+
     return (
+
+
       <div className="App">
-        <CaseStatus />
-        <div>
-          <ol>
-            {currentMessage}
-          </ol>
-          <DefaultHelp />
-        </div>
+        <Header />
+        <Router onUpdate={() => window.scrollTo(0, 0)}>
+          <Switch>
+            <Route exact path="/" component={AllUsers} />
+            <Route path="/sampleuser" component={SingleUser} />
+          </Switch>
+        </Router>
       </div>
     );
   }
